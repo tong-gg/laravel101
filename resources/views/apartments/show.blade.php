@@ -9,18 +9,29 @@
         จำนวนชั้น {{ $apartment->floors }} ชั้น
     </p>
 
+    @if ($apartment->officer)
+    <p>
+        Officer: {{ $apartment->officer->name }}
+    </p>
+    @endif
     <hr>
 
-    <a href="{{ route('apartments.edit', ['apartment' => $apartment->id]) }}">Edit this apartment</a>
+    @can('update', $apartment)
+    <a href="{{ route('apartments.edit', ['apartment' => $apartment->id]) }}">
+        Edit this apartment
+    </a>
+    @endcan
 
     <div>
         Rooms in This Apartment
     </div>
+    @can('update', $apartment)
     <div>
         <a href="{{ route('apartments.rooms.create', ['apartment' => $apartment->id]) }}">
             + Add More Room
         </a>
     </div>
+    @endcan
 
     <div>
         <ul>

@@ -10,14 +10,26 @@
             <label for="name">Apartment Name</label>
             <input type="text" name="name" autocomplete="off"
                    placeholder="Apartment Name"
-                value="{{ $apartment->name }}"
+                   class="border-2 p-2 @error('name') border-red-400 @enderror"
+                value="{{ old('name', $apartment->name) }}"
             >
+            @error('name')
+                <p class="text-red-600">
+                    {{ $message }}
+                </p>
+            @enderror
         </div>
 
         <div>
             <label for="floors">Floors</label>
             <input type="number" name="floors" min="1"
-                   value="{{ $apartment->floors }}">
+                   class="border-2 p-2 @error('name') border-red-400 @enderror"
+                   value="{{ old('floors', $apartment->floors) }}">
+            @error('floors')
+            <p class="text-red-600">
+                {{ $message }}
+            </p>
+            @enderror
         </div>
 
         <div>

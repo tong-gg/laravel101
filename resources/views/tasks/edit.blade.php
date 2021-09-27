@@ -18,9 +18,7 @@
             <div>
                 <label for="detail">Detail</label>
                 <textarea name="detail" id="detail" cols="30" rows="10"
-                          class="w-full min-h-[100px] max-h-[300px] h-28 appearance-none block w-full bg-grey-lighter text-grey-darker border border-grey-lighter rounded-lg  py-4 px-4">
-                {{ $task->detail }}
-            </textarea>
+                          class="w-full min-h-[100px] max-h-[300px] h-28 appearance-none block w-full bg-grey-lighter text-grey-darker border border-grey-lighter rounded-lg  py-4 px-4">{{ $task->detail }}</textarea>
             </div>
 
             <div>

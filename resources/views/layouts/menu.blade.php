@@ -16,4 +16,24 @@
             <a href="#" class="inline-block text-sm px-4 py-2 leading-none border rounded text-white border-white hover:border-transparent hover:text-teal hover:bg-white mt-4 lg:mt-0">Download</a>
         </div>
     </div>
+    @if (Auth::check())
+        <a href="#">
+            {{ Auth::user()->name }}
+        </a>
+        {{-- logout send through form POST method --}}
+        <form action="{{ route('logout') }}" method="POST">
+            @csrf
+
+            <button class="text-black" px-3 py-2 rounded-m type="submit">
+                LOGOUT
+            </button>
+        </form>
+    @else
+        <a href="{{ route('login') }}">
+            Login
+        </a>
+        <a href="{{ route('register') }}">
+            Register
+        </a>
+    @endif
 </nav>
