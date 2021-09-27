@@ -2,8 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\RoomRequest;
+use App\Models\Apartment;
 use App\Models\Room;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 
 class RoomController extends Controller
 {
@@ -30,11 +33,19 @@ class RoomController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param RoomRequest $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(RoomRequest $request)
     {
+        $apartment = Apartment::findOrFail($request->input('apartment_id'));
+        // why is it not validate?
+        // is there any different from room update method?
+        // TODO: find out later
+        $validated = $request->validate([
+            'floor' => ["required", "integer", "max:".$apartment->floors]
+        ]);
+
         $room = new Room();
         $room->apartment_id = $request->input('apartment_id');
         $room->floor = $request->input('floor');
@@ -66,21 +77,29 @@ class RoomController extends Controller
      */
     public function edit(Room $room)
     {
+        $room_types = Room::$room_types;
+        array_push($room_types, 'EXTRA');
+        array_push($room_types, 'EXTRA2');
         return view('rooms.edit', [
             'room' => $room,
-            'room_types' => Room::$room_types
+//            'room_types' => Room::$room_types,
+            'room_types' => $room_types
         ]);
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Room  $room
+     * @param RoomRequest $request
+     * @param \App\Models\Room $room
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Room $room)
+    public function update(RoomRequest $request, Room $room)
     {
+        $validated = $request->validate([
+            'floor' => ["required", "integer", "max:".$room->apartment->floors]
+        ]);
+
         $room->name = $request->input('name');
         $room->floor = $request->input('floor');
         $room->type = $request->input('type');

@@ -19,4 +19,10 @@ class Apartment extends Model
     {
         return $this->hasMany(Room::class);
     }
+
+    public function officer()
+    {
+        // if function name not match model, add foreign key as a second param
+        return $this->belongsTo(User::class, 'user_id');
+    }
 }

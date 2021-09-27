@@ -1,0 +1,36 @@
+<?php
+
+namespace App\Http\Requests;
+
+use App\Models\Room;
+use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
+
+class RoomRequest extends FormRequest
+{
+    /**
+     * Determine if the user is authorized to make this request.
+     *
+     * @return bool
+     */
+    public function authorize()
+    {
+        return true;
+    }
+
+    /**
+     * Get the validation rules that apply to the request.
+     *
+     * @return array
+     */
+    public function rules()
+    {
+        // cannot receive object!
+        // dynamic floor => using Validator class
+        return [
+            'name' => ['required', 'min:3'],
+            'floor' => ['required', 'integer', 'min:1'], // dynamic max floor?
+            'type' => ['required', Rule::in(Room::$room_types)]
+        ];
+    }
+}

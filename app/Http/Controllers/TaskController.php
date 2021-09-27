@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\TaskRequest;
 use App\Models\Tag;
 use App\Models\Task;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class TaskController extends Controller
 {
@@ -15,7 +17,7 @@ class TaskController extends Controller
      */
     public function index()
     {
-        $tasks = Task::get();
+        $tasks = Auth::user()->tasks()->get();
         return view('tasks.index', [
             "tasks" => $tasks
         ]);
@@ -34,10 +36,10 @@ class TaskController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param TaskRequest $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(TaskRequest $request)
     {
         /**
          * $task
@@ -46,9 +48,13 @@ class TaskController extends Controller
         // data is sent through form
         $task = new Task();
         $task->title = $request->input('title');
-        $task->detail = $request->input('detail');
+        $task->detail = trim($request->input('detail'));
         $task->due_date = $request->input('due_date');
+        $task->user_id = Auth::id();
+//        $task->user_id = $request->user()->id
+//        $task->user_id = Auth::user()->id;
         $task->save();
+
 
         $tags = trim($request->input('tags'));
         $this->updateTaskTag($task, $tags);
@@ -102,11 +108,11 @@ class TaskController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param TaskRequest $request
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(TaskRequest $request, $id)
     {
         $task = Task::findOrFail($id);
         $task->title = $request->input('title');
@@ -123,10 +129,11 @@ class TaskController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param TaskRequest $request
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Request $request, $id)
+    public function destroy(TaskRequest $request, $id)
     {
         $task = Task::findOrFail($id);
         if ($task->id === $request->input('id')) {

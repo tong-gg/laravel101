@@ -8,6 +8,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 
+// this model associate with authenticatoin system, becuase extends
 class User extends Authenticatable
 {
     use HasApiTokens, HasFactory, Notifiable;
@@ -41,4 +42,19 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    // user-defined function
+    public function isRole($role)
+    {
+        return $this->role === $role;
+    }
+
+    public function isAdmin() : bool
+    {
+        return $this->isRole('ADMIN');
+    }
+
+    public function tasks() {
+        return $this->hasMany(Task::class);
+    }
 }
