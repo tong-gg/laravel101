@@ -12,24 +12,18 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
-// [ControllerClass, return function]
 
 Route::get('/', function () {
-    return view('welcome');
+//    return view('welcome');
+    return redirect()->route('apartments.index');
 });
 
-Route::get('/hello', [\App\Http\Controllers\HelloController::class, "index"]);
-
-Route::get('/hello/array', [\App\Http\Controllers\HelloController::class, "array"])
-    ->name("hello.array"); // name route
-
-// ตำแหน่งพารามิเตอร์ในปีกกาต้องตรงกับตำแหน่งพารามิเตอร์ในฟังก์ชัน
-// ? optional ต่อท้าย
-Route::get('/posts/{id?}', [\App\Http\Controllers\HelloController::class, "posts"]);
-
-Route::get('about', [\App\Http\Controllers\HelloController::class, "about"]);
+Route::get('/dashboard', function () {
+    return view('dashboard');
+})->middleware(['auth'])->name('dashboard');
 
 // user-defined routes ห้ามประกาศหลัง resource routes
+// previous routes before install laravel breeze will be REMOVED
 Route::get('apartments/{apartment}/rooms/create',
     [\App\Http\Controllers\ApartmentController::class, "createRoom"])
     ->name('apartments.rooms.create');
@@ -38,8 +32,11 @@ Route::resource('apartments',\App\Http\Controllers\ApartmentController::class);
 
 Route::resource('rooms', \App\Http\Controllers\RoomController::class);
 
-Route::resource('tasks', \App\Http\Controllers\TaskController::class);
+Route::resource('tasks', \App\Http\Controllers\TaskController::class)
+    ->middleware('auth');
 
 Route::resource('tags', \App\Http\Controllers\TagController::class);
 Route::get('tag/{slug}', [\App\Http\Controllers\TagController::class, 'showBySlug'])
     ->name('tags.slug');
+
+require __DIR__.'/auth.php';
