@@ -165,7 +165,9 @@ return [
         /*
          * Package Service Providers...
          */
-
+        Rap2hpoutre\LaravelLogViewer\LaravelLogViewerServiceProvider::class,
+        Matthewbdaly\LaravelAzureStorage\AzureStorageServiceProvider::class,
+        Kreait\Laravel\Firebase\ServiceProvider::class,
         /*
          * Application Service Providers...
          */
@@ -175,8 +177,7 @@ return [
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
 
-        Matthewbdaly\LaravelAzureStorage\AzureStorageServiceProvider::class,
-        Kreait\Laravel\Firebase\ServiceProvider::class
+
 
     ],
 
