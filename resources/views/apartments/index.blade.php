@@ -1,6 +1,7 @@
 @extends('layouts.main')
 
 @section('content')
+    <hello></hello>
     <h1>Apartment List</h1>
 
     @can('create', \App\Models\Apartment::class)

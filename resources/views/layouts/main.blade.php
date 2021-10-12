@@ -12,13 +12,14 @@
 <body>
     {{-- เอาส่วนเล็ก ๆ จากอีกหน้ามาใช้ --}}
     @include('layouts.menu')
-    <div class="mx-auto min-h-screen bg-gray-100">
+    <div class="mx-auto min-h-screen bg-gray-100" id="app">
     {{-- @yield  เหมือนการเจาะช่อง เพื่อให้โค้ดหน้าอื่นมาใส่อยู่ในตำแหน่งนี้ได้--}}
         @yield('content')
     </div>
     <div>
         FOOTER
     </div>
+    <script src="{{ mix('js/app.js') }}"></script>
 </body>
 </html>
 

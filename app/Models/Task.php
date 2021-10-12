@@ -77,4 +77,7 @@ class Task extends Model
         return implode(', ', $this->tags->pluck('name')->all());
     }
 
+    public function user() {
+        return $this->belongsto(User::class);
+    }
 }

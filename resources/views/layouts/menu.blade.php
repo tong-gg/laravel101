@@ -32,6 +32,9 @@
         <a href="{{ route('login') }}">
             Login
         </a>
+        <a href="{{ route('google.redirect') }}">
+            Login with Google
+        </a>
         <a href="{{ route('register') }}">
             Register
         </a>

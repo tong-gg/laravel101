@@ -175,6 +175,9 @@ return [
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
 
+        Matthewbdaly\LaravelAzureStorage\AzureStorageServiceProvider::class,
+        Kreait\Laravel\Firebase\ServiceProvider::class
+
     ],
 
     /*

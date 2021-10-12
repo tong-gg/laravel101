@@ -17,7 +17,7 @@ class TaskController extends Controller
      */
     public function index()
     {
-        $tasks = Auth::user()->tasks()->get();
+        $tasks = Auth::user()->tasks()->paginate    (10);
         return view('tasks.index', [
             "tasks" => $tasks
         ]);

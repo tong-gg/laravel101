@@ -39,4 +39,12 @@ Route::resource('tags', \App\Http\Controllers\TagController::class);
 Route::get('tag/{slug}', [\App\Http\Controllers\TagController::class, 'showBySlug'])
     ->name('tags.slug');
 
+Route::resource('images', \App\Http\Controllers\ImageController::class);
+
+Route::get('/callback', [\App\Http\Controllers\GoogleAuthController::class, 'callback'])
+    ->name('google.callback');
+
+Route::get('/redirect', [\App\Http\Controllers\GoogleAuthController::class, 'redirect'])
+    ->name('google.redirect');
+
 require __DIR__.'/auth.php';
